@@ -62,7 +62,7 @@ For example:
 
 Most plugins will come with a default, but you can change it to anything you like:
 
-  * 100ms - ten millisecond (note: macos menu bar refresh rate just less than 3fps)
+  * 100ms - one hundred millisecond (note: macos menu bar refresh rate just less than 3fps)
   * 10s - ten seconds
   * 1m - one minute
   * 2h - two hours
