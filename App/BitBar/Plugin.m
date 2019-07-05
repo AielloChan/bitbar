@@ -367,10 +367,17 @@
       return _refreshIntervalSeconds;
     }
     
-    NSString *numberPart = [timeStr substringToIndex:[timeStr length]-1];
-    double numericalValue = numberPart.doubleValue ?: DEFAULT_TIME_INTERVAL_SECONDS;
+    double numericalValue;
+    NSRange range = [timeStr rangeOfString:@"^\\d+" options:NSRegularExpressionSearch];
+    if (range.location == NSNotFound) {
+      numericalValue = DEFAULT_TIME_INTERVAL_SECONDS;
+    } else {
+      numericalValue = [timeStr substringWithRange:range].doubleValue;
+    }
     
-    if ([timeStr hasSuffix:@"s"]) {
+    if ([timeStr hasSuffix:@"ms"]) {
+      numericalValue /= 1000;
+    } else if ([timeStr hasSuffix:@"s"]) {
       // this is ok - but nothing to do
     } else if ([timeStr hasSuffix:@"m"]) numericalValue *= 60;
       else if ([timeStr hasSuffix:@"h"]) numericalValue *= 60*60;
@@ -380,9 +387,8 @@
 
     
     _refreshIntervalSeconds = @(numericalValue);
-    
   }
-  
+
   return _refreshIntervalSeconds;
   
 }
